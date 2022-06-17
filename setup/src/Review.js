@@ -3,10 +3,10 @@ import people from "./data";
 import { FaChevronLeft, FaChevronRight, FaQuoteRight } from "react-icons/fa";
 
 const Review = () => {
-	const [index, SetIndex] = useState(0);
+	const [index, setIndex] = useState(0);
 	//destructure people array to extract specific items from array
 	const { name, job, image, text } = people[index];
-//check to see if index is greater than or less than the number of items in the array
+	//check to see if index is greater than or less than the number of items in the array
 	const checkNumber = (number) => {
 		if (number > people.length - 1) {
 			return 0;
@@ -16,19 +16,29 @@ const Review = () => {
 		}
 		return number;
 	};
-//Advance the review to the next person
+	//Advance the review to the next person
 	const nextPerson = () => {
-		SetIndex((index) => {
+		setIndex((index) => {
 			let newIndex = index + 1;
 			return checkNumber(newIndex);
 		});
 	};
-//Advance the review to the prev person
+	//Advance the review to the prev person
 	const prevPerson = () => {
-		SetIndex((index) => {
+		setIndex((index) => {
 			let newIndex = index - 1;
 			return checkNumber(newIndex);
 		});
+	};
+	//Random change the value of the index to advance the people array
+	const randomPerson = () => {
+		let randomNumber = Math.floor(Math.random() * people.length);
+		if (randomNumber === index) {
+			randomNumber = index + 1;
+		}
+		// check to see if the number is plus or minus the length of the array
+		//then set the value of the array
+		setIndex(checkNumber(randomNumber));
 	};
 
 	return (
@@ -50,7 +60,9 @@ const Review = () => {
 					<FaChevronRight />
 				</button>
 			</div>
-			<button className="random-btn">surprise me</button>
+			<button className="random-btn" onClick={randomPerson}>
+				surprise me
+			</button>
 		</article>
 	);
 };
